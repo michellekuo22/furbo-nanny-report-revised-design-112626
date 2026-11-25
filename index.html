@@ -1353,6 +1353,24 @@ img { display: block; }
 .ne-dp.bad .ne-dtin { border-color: #D0021B; }
 .ne-err { margin: 6px 0 0; font-size: 12px; line-height: 16px; color: #D0021B; }
 .ne-inl .ne-dtin { height: 40px; width: 100%; }
+
+/* banner spot (where the Health Log card was) */
+.n2-banner { cursor: pointer; -webkit-tap-highlight-color: transparent; height: 120px; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; box-sizing: border-box;
+  border: 1.5px dashed rgba(81,112,215,.45); background: linear-gradient(151deg, rgba(218,180,250,.18), rgba(161,208,251,.18)), #fff; }
+.n2-banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.n2-banner .b-t { font-size: 14px; line-height: 20px; font-weight: 700; color: #5170D7; }
+.n2-banner .b-s { font-size: 12px; line-height: 16px; color: #7C7C7C; }
+
+/* banner: "Chat with Nanny" */
+.n2-banner { height: auto; min-height: 96px; flex-direction: row; justify-content: flex-start; align-items: center; gap: 14px; padding: 16px; overflow: visible; border: 1.5px solid transparent;
+  background: linear-gradient(151deg, rgba(218,180,250,.22), rgba(161,208,251,.22)) padding-box, linear-gradient(#fff, #fff) padding-box, linear-gradient(135deg, #9B75FB, #5197D8) border-box; box-shadow: 0 6px 16px rgba(81,112,215,.14); transition: transform .15s ease; }
+.n2-banner:active { transform: scale(.985); }
+.n2-banner .b-orb { width: 64px; height: 64px; flex: none; margin: -4px 0 -4px -4px; }
+.n2-banner .b-tx { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.n2-banner .b-tx b { font-size: 16px; line-height: 22px; font-weight: 700; color: #434343; }
+.n2-banner .b-tx span { font-size: 12px; line-height: 16px; color: #696969; }
+.n2-banner .b-go { width: 40px; height: 40px; flex: none; border-radius: 50%; background: #F7CD3D; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(247,205,61,.45); transition: transform .2s ease; }
+.n2-banner:active .b-go { transform: translateX(3px); }
 </style>
 </head>
 <body>
@@ -2046,7 +2064,7 @@ function send(text) {
   setTimeout(() => {
     nannyTyping = false;
     const r = CHIP_REPLIES[text], t = nowTime();
-    const items = [ { type: 'ai', text: r ? r.text : NANNY_REPLY, time: t } ];
+    const items = [ { type: 'ai', text: r ? r.text : (LOG_CHAT ? LOG_REPLY : NANNY_REPLY), time: t } ];
     if (r && r.clip) {
       const id = 'r' + (++replyClipSeq);
       favs[id] = false;
@@ -2057,6 +2075,36 @@ function send(text) {
     renderChat(); scrollExpandToBottom(true);
   }, 900);
 }
+// ═══ Health-log Nanny Chat (opened from the report banner): a fresh thread, Nanny speaks first, anchored to the top ═══
+let LOG_CHAT = false, LOG_T = 0, LOG_SAVED = null;
+const LOG_GREETING = 'Hi! I’m here to help you keep Archie’s health log up to date. 🐾\n\nTell me what you’d like to log, like **medicine**, **food**, **weight**, vaccines, or anything you noticed today.\n\nFor example: “Gave Archie his joint supplement at 8 AM” or “Archie weighs 4.2 kg today.”';
+const LOG_CHIPS = [
+  { text: 'Log medicine', w: 80, emoji: '💊' }, { text: 'Log food', w: 66, emoji: '🍽️' }, { text: 'Log weight', w: 76, emoji: '⚖️' },
+  { text: 'Log a vaccine', w: 84, emoji: '💉' }, { text: 'Add a note', w: 76, emoji: '📝' },
+];
+const LOG_REPLIES = {
+  'Log medicine': { text: 'Sure! What medicine or supplement did Archie take, and when? For example: “Joint supplement, 8 AM.”' },
+  'Log food': { text: 'What did Archie eat? You can include new foods or treats, like “Chicken & rice for dinner.”' },
+  'Log weight': { text: 'What’s Archie’s weight today? For example: “4.2 kg.”' },
+  'Log a vaccine': { text: 'Which vaccine did Archie get? For example: “Rabies booster.”' },
+  'Add a note': { text: 'What did you notice about Archie today? I’ll add it to his health log.' },
+};
+const LOG_REPLY = 'Got it! I’ve added that to Archie’s health log. 📝\nYou can keep logging anything else, like medicine, food, weight or a vaccine.';
+function enterLogChat() {
+  clearTimeout(LOG_T); if (LOG_CHAT) return; LOG_CHAT = true;
+  LOG_SAVED = { groups: chat.groups, chips: CHIPS.slice(), ph: $input.placeholder, replies: Object.keys(LOG_REPLIES).map(k => [k, CHIP_REPLIES[k]]) };
+  chat.groups = [{ items: [{ type: 'ai', mid: 'mlog', text: LOG_GREETING, time: nowTime() }] }]; openMsgs.add('mlog');   // shown in full, not collapsed
+  CHIPS.splice(0, CHIPS.length, ...LOG_CHIPS); Object.assign(CHIP_REPLIES, LOG_REPLIES);
+  $input.placeholder = 'Log medicine, food, weight…';
+  [$chatHome, $chatExpand].forEach(v => { v.innerHTML = ''; }); renderChat(); renderChips();
+}
+function exitLogChat() {
+  if (!LOG_CHAT) return; LOG_CHAT = false;
+  openMsgs.delete('mlog'); chat.groups = LOG_SAVED.groups; CHIPS.splice(0, CHIPS.length, ...LOG_SAVED.chips); $input.placeholder = LOG_SAVED.ph;
+  LOG_SAVED.replies.forEach(([k, v]) => { if (v === undefined) delete CHIP_REPLIES[k]; else CHIP_REPLIES[k] = v; });
+  [$chatHome, $chatExpand].forEach(v => { v.innerHTML = ''; }); renderChat(); renderChips();
+}
+function openLogChat() { enterLogChat(); openExpand(false); $chatExpand.scrollTop = 0; setTimeout(openKeyboard, 350); }
 function sendFromInput() {
   const t = $input.value;
   $input.value = ''; syncInput();
@@ -2113,6 +2161,7 @@ function closeExpand() {
   setTopTint(false);
   if (wasOpen && currentTab === 'home') startBubble();
   if (wasOpen) { $chatExpand.querySelectorAll('video').forEach(v => v.pause()); armClips($chatHome); }
+  if (LOG_CHAT) { clearTimeout(LOG_T); LOG_T = setTimeout(exitLogChat, 450); }
 }
 function touchOf(e) { return (e.touches && e.touches[0]) || (e.changedTouches && e.changedTouches[0]) || e; }
 function pointY(e) { return touchOf(e).clientY; }
@@ -2269,6 +2318,7 @@ setupLiveSwipe();
 // Nanny in the nav bar opens Nanny Chat with the keyboard up.
 document.getElementById('nav-nanny').addEventListener('click', () => openExpand(true));
 document.getElementById('home-chatbar').addEventListener('click', () => openExpand(true));
+document.addEventListener('click', e => { if (e.target.closest('[data-open-nanny]')) openLogChat(); });   // report banner -> Nanny Chat slides up over the report page
 [$chatHome, document.getElementById('vh-list'), document.getElementById('page-report'), document.getElementById('page-menu')]
   .forEach(el => el.addEventListener('scroll', () => onPageScroll(el), { passive: true }));
 // Nanny Chat: once the chat is at the very top, pulling down a little more collapses it back to Home.
@@ -3051,7 +3101,7 @@ function n2Page(d) {
   return '<div class="n2">' + top +
     sec('Activity', '<div class="n2-card n2-stk n2-stk16">' + n2Act(d) + '</div>', PREMIUM) + sec('Eating &amp; Drinking', n2ED(d), true) +
     sec('Barking', '<div class="n2-card n2-stk n2-stk16 n2-bm">' + n2Bark(d) + '</div>', PREMIUM) +
-    (PREMIUM ? '<div class="n2-fix">' + n2Health() + n2Vet() + '</div>' : '') + '</div>';
+    (PREMIUM ? '<div class="n2-fix">' + n2Banner() + n2Vet() + '</div>' : '') + '</div>';
 }
 
 // ═══ Health Log + Vet Brief (Figma "Claude Vet Brief") ═══
@@ -3069,6 +3119,10 @@ const rngLabel = r => 'Nov ' + r.s + ' – Nov ' + r.e;
 const MON = 'Nov.';
 const dnum = (d, off) => { const dt = new Date(2026, 10, +d - off); return ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'][dt.getMonth()] + ' ' + pad2(dt.getDate()) + ', ' + dt.getFullYear(); };
 let HL_OPT = 'D';   // DRAFT: where the single "edit health log" control sits (A = title row icon, B = "Logged today" row icon, C = Edit pill)
+function n2Banner() {   // banner spot (replaces the Health Log card): drop an image in BANNER_IMG to fill it
+  return '<div class="n2-banner" role="button" tabindex="0" aria-label="Open Nanny Chat" data-open-nanny>' + (BANNER_IMG ? '<img src="' + BANNER_IMG + '" alt="">' : '<img class="b-orb" src="assets/n/nr_happy.png" alt=""><div class="b-tx"><b>Chat with Nanny</b><span>Log medicine, food, weight &amp; more</span></div><span class="b-go" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="#434343" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>') + '</div>';
+}
+const BANNER_IMG = '';
 function n2Health() {
   const log = HLOG[rpDay] || [];
   const penBtn = '<button class="n2-eall" data-hleditall aria-label="Edit health log"><img src="' + N2 + 'edit.svg" alt=""></button>';
@@ -3760,11 +3814,9 @@ setupReportPage();
 document.addEventListener('touchmove', function(e) { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
 </script>
 <button id="dp-toggle" aria-label="Show designs">Designs</button>
-<aside id="design-panel" aria-label="Design versions"><h4>Nanny Report Optimization / Health Log / Vet Brief</h4>
+<aside id="design-panel" aria-label="Design versions"><h4>Nanny Report Optimization / Vet Brief</h4>
   <button data-d="O">Current Design</button>
   <button data-d="N" class="on">Design A</button>
-  <div class="dp-lab">Health Log</div>
-  <div class="seg" role="group" aria-label="Health Log layout"><button data-eo="D" class="on">List</button><button data-eo="E">Tags</button></div>
   <div class="prem" style="display:flex"><span><b>Premium features</b></span><button class="sw on" id="prem-sw" aria-label="Premium features"><i></i></button></div>
 </aside>
 <script>
