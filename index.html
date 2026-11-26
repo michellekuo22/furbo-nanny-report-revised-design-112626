@@ -903,7 +903,7 @@ img { display: block; }
 .n2-cr { height: 44px; }
 .n2-cl { display: flex; justify-content: space-between; align-items: center; height: 28px; color: #434343; }
 .n2-cl .b { font-size: 14px; line-height: 20px; font-weight: 700; } .n2-cl .m { font-size: 14px; line-height: 20px; font-weight: 400; }
-.n2-cl .v b { font-size: 20px; line-height: 28px; font-weight: 700; } .n2-cl .v u { text-decoration: none; font-size: 12px; line-height: 16px; font-weight: 500; }
+.n2-cl .v b { font-size: 22px; line-height: 28px; font-weight: 700; } .n2-cl .v u { text-decoration: none; font-size: 12px; line-height: 16px; font-weight: 500; }
 .n2-tr { height: 10px; border-radius: 16px; margin-top: 4.6px; overflow: hidden; }
 .n2-tr.t { background: #fff; }
 .n2-tr i { display: block; height: 10px; border-radius: 16px; }
@@ -922,7 +922,7 @@ img { display: block; }
 .n2-ic { position: relative; flex: none; }
 .n2-ic img { position: absolute; display: block; max-width: none; }
 .n2-num { color: #434343; white-space: nowrap; }
-.n2-num b { display: block; font-size: 24px; line-height: 34px; font-weight: 700; margin-bottom: -6px; }
+.n2-num b { display: block; font-size: 22px; line-height: 34px; font-weight: 700; margin-bottom: -6px; }
 .n2-num small { display: block; font-size: 10px; line-height: 13px; font-weight: 500; }
 .n2-ed-r { width: 149.3px; flex: none; align-self: stretch; display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; }
 .n2-g2 { display: flex; flex-direction: column; gap: 8px; }
@@ -1417,14 +1417,14 @@ img { display: block; }
 .cb .cb-l { align-self: center; display: flex; align-items: center; gap: 6px; font-size: 14px; line-height: 20px; font-weight: 700; color: #434343; }
 .cb .cb-l .n2-infob, .cb .cb-l .n2-info { width: 12px; height: 12px; }
 .cb .cb-v { margin-top: 4px; text-align: right; color: #434343; white-space: nowrap; }
-.cb .cb-v b { display: block; font-size: 20px; line-height: 20px; font-weight: 700; }
+.cb .cb-v b { display: block; font-size: 22px; line-height: 22px; font-weight: 700; }
 .cb .cb-v small { display: block; font-size: 11px; line-height: 14px; font-weight: 400; }
 .cb .n2-tr { height: 10px; margin: 0; border-radius: 16px; background: #fff; overflow: hidden; }
 .cb .n2-tr i { height: 10px; border-radius: 16px; }
 .cb .n2-tr i.g { background: linear-gradient(176.54deg, #9B75FB 1.4%, #5197D8 99.9%); }
 .cb .n2-tr i.s { background: rgba(81,112,215,.4); }
 .cb .cb-sp { position: absolute; right: 8px; bottom: 8px; width: 20px; height: 20px; pointer-events: none; }   /* 20 x 20, 8px from the edges and 8px under the bar */
-.n2-num b { font-size: 20px; line-height: 28px; margin-bottom: 0; } .n2-num small { font-size: 11px; line-height: 14px; font-weight: 400; }
+.n2-num b { font-size: 22px; line-height: 28px; margin-bottom: 0; } .n2-num small { font-size: 11px; line-height: 14px; font-weight: 400; }
 .n2-ed.d .n2-num b { margin-bottom: 0; }
 .n2-banner { position: relative; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; width: 100%; height: 48px; min-height: 48px; padding: 16px; gap: 0; overflow: hidden; cursor: pointer;
   border: .5px solid #9B75FB; border-radius: 12px; box-shadow: none; background: linear-gradient(172.16deg, rgb(155,117,251) 1.4095%, rgb(81,151,216) 99.892%); transition: transform .15s ease; }
@@ -3227,7 +3227,7 @@ function n2Page(d) {
   return '<div class="n2">' + top +
     sec('Activity', '<div class="n2-card n2-stk n2-stk16">' + n2Act(d) + '</div>', PREMIUM) + sec('Eating &amp; Drinking', n2ED(d), true) +
     sec('Barking', '<div class="n2-card n2-stk n2-stk16 n2-bm">' + n2Bark(d) + '</div>', PREMIUM) +
-    (PREMIUM ? '<div class="n2-fix">' + n2Banner() + n2Vet() + '</div>' : '') + '</div>';
+    (PREMIUM ? '<div class="n2-fix">' + n2Vet() + '</div>' : '') + '</div>';
 }
 
 // ═══ Health Log + Vet Brief (Figma "Claude Vet Brief") ═══
