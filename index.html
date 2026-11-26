@@ -728,7 +728,7 @@ img { display: block; }
 /* Quick prompts: a marquee that keeps scrolling left; touching it pauses so it can be swiped by hand */
 .chips { overflow-x: auto; overflow-y: hidden; scrollbar-width: none; -webkit-overflow-scrolling: touch; padding-left: 16px; margin-bottom: 12px;
   display: flex; cursor: grab; }
-.chip-set { display: flex; gap: 8px; padding-right: 8px; flex: none; }
+.chip-set { display: flex; gap: 8px; padding-right: 16px; flex: none; }
 .chip { flex: none; height: 34px; background: rgba(67,67,67,0.08); border-radius: 17px; padding: 0 12px 0 10px; display: flex; align-items: center; gap: 4px; }
 .chip:active { background: rgba(67,67,67,0.14); }
 .chip-emoji { font-size: 16px; line-height: 20px; flex: none; width: 20px; text-align: center; font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif; }
@@ -1357,20 +1357,99 @@ img { display: block; }
 /* banner spot (where the Health Log card was) */
 .n2-banner { cursor: pointer; -webkit-tap-highlight-color: transparent; height: 120px; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; box-sizing: border-box;
   border: 1.5px dashed rgba(81,112,215,.45); background: linear-gradient(151deg, rgba(218,180,250,.18), rgba(161,208,251,.18)), #fff; }
-.n2-banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.n2-banner > img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .n2-banner .b-t { font-size: 14px; line-height: 20px; font-weight: 700; color: #5170D7; }
 .n2-banner .b-s { font-size: 12px; line-height: 16px; color: #7C7C7C; }
 
 /* banner: "Chat with Nanny" */
-.n2-banner { height: auto; min-height: 96px; flex-direction: row; justify-content: flex-start; align-items: center; gap: 14px; padding: 16px; overflow: visible; border: 1.5px solid transparent;
-  background: linear-gradient(151deg, rgba(218,180,250,.22), rgba(161,208,251,.22)) padding-box, linear-gradient(#fff, #fff) padding-box, linear-gradient(135deg, #9B75FB, #5197D8) border-box; box-shadow: 0 6px 16px rgba(81,112,215,.14); transition: transform .15s ease; }
+.n2-banner { height: auto; min-height: 96px; flex-direction: row; justify-content: flex-start; align-items: center; gap: 14px; padding: 15.5px; overflow: visible; border: .5px solid transparent;
+  background: linear-gradient(151deg, rgba(218,180,250,.2), rgba(161,208,251,.2)) padding-box, linear-gradient(#fff, #fff) padding-box, linear-gradient(135deg, rgba(155,117,251,.3), rgba(81,151,216,.3)) border-box;   /* same purple outline as the Vet Brief card */ box-shadow: 0 6px 16px rgba(81,112,215,.14); transition: transform .15s ease; }
 .n2-banner:active { transform: scale(.985); }
 .n2-banner .b-orb { width: 64px; height: 64px; flex: none; margin: -4px 0 -4px -4px; }
 .n2-banner .b-tx { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .n2-banner .b-tx b { font-size: 16px; line-height: 22px; font-weight: 700; color: #434343; }
 .n2-banner .b-tx span { font-size: 12px; line-height: 16px; color: #696969; }
-.n2-banner .b-go { width: 40px; height: 40px; flex: none; border-radius: 50%; background: #F7CD3D; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(247,205,61,.45); transition: transform .2s ease; }
+.n2-banner .b-go { width: 40px; height: 40px; flex: none; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(81,112,215,.2); transition: transform .2s ease; }
 .n2-banner:active .b-go { transform: translateX(3px); }
+
+.fb-opt.log-opt { display: inline-flex; align-items: center; gap: 6px; height: 36px; padding: 0 12px; border-radius: 16px; background: #FDF5D8; border: 1px solid #F7CD3D; font-size: 14px; line-height: 20px; box-shadow: 0 2px 4px rgba(247,205,61,.35); -webkit-tap-highlight-color: transparent; }   /* Figma quick-reply pill: #FDF5D8 fill, 1px #F7CD3D outline */
+.fb-opt.log-opt img { width: 20px; height: 20px; flex: none; }
+
+.log-tip { position: absolute; left: 50%; bottom: calc(100% + 10px); z-index: 12; display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 12px; background: #434343; color: #fff; font-size: 14px; line-height: 20px; font-weight: 500; white-space: nowrap; box-shadow: 0 6px 16px rgba(0,0,0,.18);
+  opacity: 0; transform: translate(-50%, 8px); pointer-events: none; transition: opacity .25s ease, transform .25s ease; }
+.log-tip.on { opacity: 1; transform: translate(-50%, 0); }
+
+/* Health log card in Nanny Chat */
+.log-card { align-self: stretch; width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box; background: #fff; border-radius: 16px; padding: 12px 16px 6px; overflow: hidden; }
+.log-card .lc-h { display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 6px; }
+.log-card .lc-h b { font-size: 16px; line-height: 22px; font-weight: 700; color: #434343; }
+.log-card .lc-h span { font-size: 12px; line-height: 16px; color: #7C7C7C; }
+.log-card .lc-r { display: flex; align-items: center; gap: 8px; min-height: 44px; border-top: 1px solid #ECECEC; }
+.log-card .lc-r .ic { width: 20px; height: 20px; flex: none; }
+.log-card .lc-r .tx { flex: 1; min-width: 0; font-size: 14px; line-height: 20px; font-weight: 500; color: #434343; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.log-card .lc-r .dt { flex: none; font-size: 12px; line-height: 16px; color: #7C7C7C; }
+.log-card .lc-b { width: 28px; height: 28px; flex: none; display: flex; align-items: center; justify-content: center; border-radius: 14px; }
+.log-card .lc-b img { width: 16px; height: 16px; opacity: .6; }
+.log-card .lc-b:active { background: rgba(67,67,67,.08); }
+.log-card .lc-empty { padding: 14px 0 10px; font-size: 14px; color: #7C7C7C; border-top: 1px solid #ECECEC; }
+.log-card .lc-more { width: 100%; height: 40px; border-top: 1px solid #ECECEC; font-size: 14px; font-weight: 700; color: #5170D7; text-align: center; }
+.fb-opt.log-opt .lc-ico { font-size: 16px; line-height: 20px; width: 20px; text-align: center; }
+.log-tip .lt-undo { margin-left: 4px; padding: 0 0 0 10px; border-left: 1px solid rgba(255,255,255,.3); font-size: 14px; font-weight: 700; color: #F7CD3D; }
+.log-tip.on { pointer-events: auto; }
+
+/* chat health log card = same timeline design as the Vet Brief pet notes */
+.log-card { background: none; padding: 0; border-radius: 0; overflow: visible; }
+.log-card .vb-card { margin-bottom: 0; }
+.log-card .lc-lab { display: flex; align-items: baseline; justify-content: space-between; margin: 0 0 8px; }
+.log-card .lc-lab em { font-style: normal; font-size: 12px; line-height: 16px; font-weight: 400; color: #7C7C7C; }
+.log-card .vb-tl .er.lc-tap { cursor: pointer; }
+.log-card .vb-tl .er .ne-chev { width: 16px; height: 16px; margin-left: auto; opacity: .5; transform: rotate(-90deg); }
+.log-card .lc-more { margin-top: 4px; border-top: 0; height: 36px; }
+
+.log-card .vb-tl .lc-h { padding-bottom: 0; margin-bottom: -2px; }
+.log-card .vb-tl .lc-more { margin: 0; height: 20px; border: 0; font-size: 12px; line-height: 16px; font-weight: 700; color: #5170D7; text-align: center; }
+
+/* ===== Figma 11/21 revision: comparison box + gradient banner (exact values) ===== */
+.n2-cgs.cb { position: relative; display: flex; flex-direction: column; gap: 12px; height: 172px; box-sizing: border-box; padding: 12px 12px 0; border: 1px solid transparent; border-radius: 12px;
+  background: linear-gradient(152.25deg, rgba(218,180,250,.2) 0%, rgba(161,208,251,.2) 100%) padding-box, linear-gradient(#fff, #fff) padding-box, linear-gradient(152deg, #E1DBFB 0%, #C3D9F3 100%) border-box; }   /* Figma: 325 x 171, gradient outline lavender -> blue */
+.cb .cb-g { display: flex; flex-direction: column; gap: 5px; }
+.cb .cb-row { display: flex; align-items: flex-start; justify-content: space-between; height: 40px; }
+.cb .cb-l { align-self: center; display: flex; align-items: center; gap: 6px; font-size: 14px; line-height: 20px; font-weight: 700; color: #434343; }
+.cb .cb-l .n2-infob, .cb .cb-l .n2-info { width: 12px; height: 12px; }
+.cb .cb-v { margin-top: 4px; text-align: right; color: #434343; white-space: nowrap; }
+.cb .cb-v b { display: block; font-size: 20px; line-height: 20px; font-weight: 700; }
+.cb .cb-v small { display: block; font-size: 11px; line-height: 14px; font-weight: 400; }
+.cb .n2-tr { height: 10px; margin: 0; border-radius: 16px; background: #fff; overflow: hidden; }
+.cb .n2-tr i { height: 10px; border-radius: 16px; }
+.cb .n2-tr i.g { background: linear-gradient(176.54deg, #9B75FB 1.4%, #5197D8 99.9%); }
+.cb .n2-tr i.s { background: rgba(81,112,215,.4); }
+.cb .cb-sp { position: absolute; right: 8px; bottom: 8px; width: 20px; height: 20px; pointer-events: none; }   /* 20 x 20, 8px from the edges and 8px under the bar */
+.n2-num b { font-size: 20px; line-height: 28px; margin-bottom: 0; } .n2-num small { font-size: 11px; line-height: 14px; font-weight: 400; }
+.n2-ed.d .n2-num b { margin-bottom: 0; }
+.n2-banner { position: relative; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; width: 100%; height: 48px; min-height: 48px; padding: 16px; gap: 0; overflow: hidden; cursor: pointer;
+  border: .5px solid #9B75FB; border-radius: 12px; box-shadow: none; background: linear-gradient(172.16deg, rgb(155,117,251) 1.4095%, rgb(81,151,216) 99.892%); transition: transform .15s ease; }
+.n2-banner:active { transform: scale(.985); }
+.n2-banner img { max-width: none; }
+.bn-v1, .bn-v2 { position: absolute; display: flex; align-items: center; justify-content: center; mix-blend-mode: multiply; pointer-events: none; }
+.bn-v1 { left: -59.5px; top: -22.5px; width: 298.662px; height: 111.465px; }
+.bn-v2 { left: -62.6px; top: -5.5px; width: 115.957px; height: 94.465px; }
+.bn-v1 .in, .bn-v2 .in { flex: none; transform: rotate(169.64deg); }
+.bn-v1 .vec { position: relative; width: 292.678px; height: 59.808px; } .bn-v2 .vec { position: relative; width: 103.792px; height: 77.056px; }
+.bn-v1 .vi { position: absolute; inset: -167.2% -34.17%; } .bn-v2 .vi { position: absolute; inset: -129.77% -96.35%; }
+.bn-v1 .vi img, .bn-v2 .vi img { display: block; width: 100%; height: 100%; }
+.bn-av { position: absolute; left: -4px; top: 11px; width: 41px; height: 41px; pointer-events: none; }
+.bn-av .l1 { position: absolute; left: .61px; top: .37px; width: 40.027px; height: 40.027px; transform: scaleX(-1); }
+.bn-av .l2 { position: absolute; left: -.23px; top: -.46px; width: 41.695px; height: 41.695px; transform: scaleX(-1); }
+.bn-av .mk { position: relative; width: 100%; height: 100%; -webkit-mask-image: url(assets/n2/fig_b_glass.svg); mask-image: url(assets/n2/fig_b_glass.svg); -webkit-mask-size: 41px 41px; mask-size: 41px 41px; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; }
+.bn-av .m1 { -webkit-mask-position: -.367px -.371px; mask-position: -.367px -.371px; } .bn-av .m2 { -webkit-mask-position: .464px .463px; mask-position: .464px .463px; }
+.bn-av .m1 img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.bn-av .ph { position: absolute; inset: 0; overflow: hidden; } .bn-av .ph img { position: absolute; left: -16.67%; top: -19.33%; width: 133.33%; height: 133.33%; display: block; }
+.bn-tx { position: relative; width: 164px; padding-left: 32px; box-sizing: content-box; }
+.bn-tx span { display: block; font-size: 14px; line-height: 20px; font-weight: 700; color: #fff; white-space: nowrap; }
+.bn-go { position: relative; flex: none; width: 32px; height: 32px; } .bn-go img { display: block; width: 32px; height: 32px; }
+
+/* Nanny Chat: no quick-prompt bar */
+.compose .chips, .screen.kb-open .compose .chips { display: none !important; }
 </style>
 </head>
 <body>
@@ -1672,7 +1751,9 @@ const favs = { c1: true, c2: false, c3: false, c4: false };
 const feedback = {};
 let nannyTyping = false;
 
+const LOG_OPTS = [['weight', 'Log Archie’s weight'], ['food', 'Switch kibble?'], ['note', 'Add a note'], ['vaccine', 'Got any vaccines?'], ['meds', 'Any meds today?']];
 const CHIPS = [
+  { text: 'Log Archie’s health', w: 118, emoji: '🩺' },
   { text: 'What can Nanny do?', w: 66, emoji: '⭐', opensFeatures: true },
   { text: 'Show me cute moments', w: 88, emoji: '🎬' },
   { text: 'Any unusual behavior?', w: 81, emoji: '🔍' },
@@ -1682,6 +1763,7 @@ const CHIPS = [
 const NANNY_REPLY = 'Got it! I’ll keep an eye on Archie and let you know as soon as I notice anything new 🐾';
 // Quick prompt → Nanny reply (text, plus an optional clip).
 const CHIP_REPLIES = {
+  'Log Archie’s health': { text: 'Sure! What would you like to log for Archie? You can log **medicine**, **food**, **weight**, vaccines, or a note.\n\nFor example: “Gave Archie his joint supplement at 8 AM” or “Archie weighs 4.2 kg today.”' },
   'What can Nanny do?': { text: 'I’m here to help you keep up with Archie’s day, helping you see more, understand better, and worry less.\n\n' +
     '🎵 **Calm My Pet:** Play relaxing music to help Archie unwind.\n' +
     '📸 **Pet ID:** Update Archie’s photo to improve alert accuracy.\n' +
@@ -1730,6 +1812,7 @@ function clampEl(el) {
   const mid = el.dataset.mid, bub = el.closest('.bubble');
   if (!MSG_TEXT[mid]) MSG_TEXT[mid] = el.innerHTML;
   el.innerHTML = MSG_TEXT[mid]; el.classList.remove('clamped');
+  if (LOG_CHAT) { bub.classList.remove('can-toggle', 'open'); return; }   // health-log thread: full text, no expand icon
   const lh = parseFloat(getComputedStyle(el).lineHeight) || 20, max = lh * 2 + 2;
   if (el.scrollHeight <= max) { bub.classList.remove('can-toggle', 'open'); return; }
   bub.classList.add('can-toggle');
@@ -1770,6 +1853,12 @@ function renderItem(it) {
     case 'fbopts':
       return '<div class="fb-opts' + (it.done ? ' done' : '') + '" data-fbopts="' + it.fid + '">' + FB_OPTIONS.map(o =>
         '<button class="fb-opt' + ((fbPending && fbPending.fid === it.fid && fbPending.sel.has(o)) ? ' on' : '') + '" data-opt="' + o + '">' + o + '</button>').join('') + '</div>';
+    case 'logopts':
+      return '<div class="fb-opts log-opts">' + LOG_OPTS.map(([k, l]) => '<button class="fb-opt log-opt" data-logopt="' + l + '"><img src="assets/n2/i_' + k + '.png" alt=""><span>' + l + '</span></button>').join('') + '</div>';
+    case 'loglist':
+      return '<div class="log-card">' + lcInner() + '</div>';
+    case 'logview':
+      return '<div class="fb-opts log-opts"><button class="fb-opt log-opt" data-lc-show><span class="lc-ico">📋</span><span>View all logs</span></button></div>';
     case 'time':
       return '<div class="time">' + it.time + '</div>';
     case 'clip': {
@@ -1801,7 +1890,7 @@ function renderItem(it) {
 // Only the last message of a group carries a time stamp; the ones in between don't.
 function renderGroup(g) {
   let last = -1, t = null;
-  g.items.forEach((it, i) => { if (['ai', 'user', 'clip', 'fbopts'].includes(it.type)) last = i; if (it.time) t = it.time; });
+  g.items.forEach((it, i) => { if (['ai', 'user', 'clip', 'fbopts', 'logopts', 'loglist', 'logview'].includes(it.type)) last = i; if (it.time) t = it.time; });
   return g.items.map((it, i) => (it.type === 'time' ? '' : renderItem(it)) +
     (i === last && t ? '<div class="time' + (it.type === 'user' ? ' r' : '') + '">' + t + '</div>' : '')).join('');
 }
@@ -1915,28 +2004,30 @@ function renderChips() {
   const set = hidden => '<div class="chip-set"' + (hidden ? ' aria-hidden="true"' : '') + '>' + CHIPS.map((c, i) =>
     '<button class="chip" data-chip="' + i + '"' + (hidden ? ' tabindex="-1"' : '') + '><span class="chip-emoji">' + c.emoji + '</span><span>' + esc(c.text) + '</span></button>'
   ).join('') + '</div>';
-  $chips.innerHTML = set(false) + set(true);
+  $chips.innerHTML = set(false);   // one set only: a plain swipeable row, nothing repeats
 }
 // ─── Quick prompt marquee ────────────────────────────────────────────────────
 // Scrolls left continuously while the keyboard is open. Touching (or mouse-dragging) pauses it so the
 // row can be swiped by hand; it resumes shortly after release. A tap on a prompt still sends it.
 const MQ_SPEED = 28; // px per second
+const MQ_AUTO = false;   // the quick prompts no longer scroll on their own
 let mqPos = 0, mqHeld = false, mqResumeAt = 0, mqLast = 0, mqDragX = null, mqDragStart = 0, mqDragged = false;
 function mqPeriod() { const set = $chips.querySelector('.chip-set'); return set ? set.offsetWidth : 0; }
 function mqWrap() {
+  return;   // single set: no looping
   const period = mqPeriod(); if (!period) return;
   while (mqPos >= period) mqPos -= period;
   while (mqPos < 0) mqPos += period;
 }
 function mqTick(t) {
   const dt = mqLast ? Math.min(0.05, (t - mqLast) / 1000) : 0; mqLast = t;
-  if ($screen.classList.contains('kb-open') && !mqHeld && t >= mqResumeAt) {
+  if (MQ_AUTO && $screen.classList.contains('kb-open') && !mqHeld && t >= mqResumeAt) {
     mqPos += MQ_SPEED * dt; mqWrap(); $chips.scrollLeft = mqPos;
   }
   requestAnimationFrame(mqTick);
 }
 function mqPause() { mqHeld = true; }
-function mqRelease() { mqHeld = false; mqPos = $chips.scrollLeft; mqWrap(); $chips.scrollLeft = mqPos; mqResumeAt = performance.now() + 1500; }
+function mqRelease() { mqHeld = false; mqPos = $chips.scrollLeft; mqResumeAt = performance.now() + 1500; }
 function setupMarquee() {
   $chips.addEventListener('touchstart', mqPause, { passive: true });
   $chips.addEventListener('touchend', mqRelease);
@@ -2063,8 +2154,11 @@ function send(text) {
   renderChat(); scrollExpandToBottom(true);
   setTimeout(() => {
     nannyTyping = false;
-    const r = CHIP_REPLIES[text], t = nowTime();
-    const items = [ { type: 'ai', text: r ? r.text : (LOG_CHAT ? LOG_REPLY : NANNY_REPLY), time: t } ];
+    const q = isLogQuery(text), r = q ? null : (LOG_CHAT && LOG_CHIP_REPLIES[text]) || CHIP_REPLIES[text], t = nowTime();
+    const logged = LOG_CHAT && !q && !r;
+    if (logged) saveLog(text);
+    const items = q ? [ { type: 'ai', text: LOG_VIEW_TEXT, time: t }, { type: 'loglist' } ]
+      : [ { type: 'ai', text: r ? r.text : (LOG_CHAT ? LOG_REPLY : NANNY_REPLY), time: t } ];
     if (r && r.clip) {
       const id = 'r' + (++replyClipSeq);
       favs[id] = false;
@@ -2073,36 +2167,57 @@ function send(text) {
     }
     chat.groups.push({ items });
     renderChat(); scrollExpandToBottom(true);
+    if (logged) showLogTip('Logged to Archie’s health log');   // something was actually logged (typed entry), not just a shortcut tap
   }, 900);
 }
 // ═══ Health-log Nanny Chat (opened from the report banner): a fresh thread, Nanny speaks first, anchored to the top ═══
 let LOG_CHAT = false, LOG_T = 0, LOG_SAVED = null;
-const LOG_GREETING = 'Hi! I’m here to help you keep Archie’s health log up to date. 🐾\n\nTell me what you’d like to log, like **medicine**, **food**, **weight**, vaccines, or anything you noticed today.\n\nFor example: “Gave Archie his joint supplement at 8 AM” or “Archie weighs 4.2 kg today.”';
-const LOG_CHIPS = [
-  { text: 'Log medicine', w: 80, emoji: '💊' }, { text: 'Log food', w: 66, emoji: '🍽️' }, { text: 'Log weight', w: 76, emoji: '⚖️' },
-  { text: 'Log a vaccine', w: 84, emoji: '💉' }, { text: 'Add a note', w: 76, emoji: '📝' },
-];
-const LOG_REPLIES = {
-  'Log medicine': { text: 'Sure! What medicine or supplement did Archie take, and when? For example: “Joint supplement, 8 AM.”' },
-  'Log food': { text: 'What did Archie eat? You can include new foods or treats, like “Chicken & rice for dinner.”' },
-  'Log weight': { text: 'What’s Archie’s weight today? For example: “4.2 kg.”' },
-  'Log a vaccine': { text: 'Which vaccine did Archie get? For example: “Rabies booster.”' },
+const LOG_GREETING = 'Hi! I’m here to help you keep Archie’s health log up to date. 🐾 Would you like to log the below?';
+const LOG_CHIP_REPLIES = {
+  'Log Archie’s health': { text: 'Of course! Tap one above or type it below, like “Archie weighs 4.2 kg today.”' },
+  'Log Archie’s weight': { text: 'What’s Archie’s weight today? For example: “4.2 kg.”' },
+  'Switch kibble?': { text: 'Did you switch Archie’s kibble? Tell me the new food, like “Salmon kibble, started today.”' },
+  'Got any vaccines?': { text: 'Which vaccine did Archie get? For example: “Rabies booster.”' },
+  'Any meds today?': { text: 'What medicine or supplement did Archie take? For example: “Joint supplement, 8 AM.”' },
   'Add a note': { text: 'What did you notice about Archie today? I’ll add it to his health log.' },
 };
 const LOG_REPLY = 'Got it! I’ve added that to Archie’s health log. 📝\nYou can keep logging anything else, like medicine, food, weight or a vaccine.';
+// ── Health log in Nanny Chat: view everything that was logged, edit or delete any entry ──
+let LOG_KIND = null, LCARD_N = 6;   // the health log card shows 6 entries, then 6 more each time "Show more" is tapped
+const LOG_VIEW_TEXT = 'Here’s Archie’s health log. Tap any entry to edit or delete it.';
+const isLogQuery = t => /\b(show|view|see|open|check|list|all)\b.*\blogs?\b|\blogs?\b.*\b(show|view|see|all)\b/i.test(t);
+const LOG_KEYS = { 'Log Archie’s weight': 'weight', 'Switch kibble?': 'food', 'Got any vaccines?': 'vaccine', 'Any meds today?': 'meds', 'Add a note': 'note' };
+function guessKind(t) { return /kg|lb|weigh/i.test(t) ? 'weight' : /vaccin|rabies|lyme|booster|shot/i.test(t) ? 'vaccine' : /med|supplement|pill|dose|tablet|probiotic/i.test(t) ? 'meds' : /ate|eat|food|treat|kibble|breakfast|dinner|lunch/i.test(t) ? 'food' : 'note'; }
+function saveLog(text) {   // a typed entry in the health-log chat becomes a real log entry (it also shows up in the Vet Brief pet notes)
+  const k = LOG_KIND || guessKind(text), key = String(+rpDay); LOG_KIND = null;
+  (HLOG[key] = HLOG[key] || []).push({ id: HL_ID++, k, t: neLabel(k) + ': ' + text });
+}
+function lcInner() {   // same design as the Vet Brief "Pet notes": date | timeline | icon + text + ›  (tap an entry to edit or delete it)
+  const all = neAllNotes(), n = all.length, vis = all.slice(Math.max(0, n - LCARD_N)), groups = [];
+  vis.forEach(x => { const d = vbMD(x.dt.getMonth() + 1, x.dt.getDate()); let g = groups[groups.length - 1]; if (!g || g.d !== d) groups.push(g = { d, items: [] }); g.items.push(x); });
+  return '<div class="vb-card vb-tl"><div class="lc-h"><b>Health Log</b><span>' + n + ' ' + (n === 1 ? 'entry' : 'entries') + '</span></div>' +
+    (groups.length ? groups.map(g => '<div class="tg"><div class="dt">' + g.d + '</div><div class="ln"><i></i></div><div class="en">' + g.items.map(x =>
+      '<div class="er lc-tap" data-lc-edit="' + x.id + '"><img src="' + N2 + 'i_' + x.k + '.png" alt=""><span>' + vbEsc(neVal(x.t)) + '</span><img class="ne-chev" src="' + N2 + 'chev.svg" alt=""></div>').join('') + '</div></div>').join('') : '<div class="er"><span>Nothing logged yet.</span></div>') +
+    (n > 6 ? '<button class="lc-more" data-lc-more>' + (LCARD_N < n ? 'Show more' : 'Show less') + '</button>' : '') + '</div>';
+}
+function lcRefresh() { document.querySelectorAll('.log-card').forEach(el => { el.innerHTML = lcInner(); }); }
+function showLogTip(msg, undo) {   // tooltip above the input ("Logged…", "Log deleted · Undo")
+  let t = document.getElementById('log-tip');
+  if (!t) { document.getElementById('panel').insertAdjacentHTML('beforeend', '<div class="log-tip" id="log-tip" role="status"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="#00A769"/><path d="M5.2 9.3l2.5 2.5 5.1-5.3" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span></span><button class="lt-undo" data-lt-undo>Undo</button></div>'); t = document.getElementById('log-tip'); t.querySelector('[data-lt-undo]').addEventListener('click', () => { if (t._undo) t._undo(); t._undo = null; t.classList.remove('on'); }); }
+  t.querySelector('span').textContent = msg || 'Logged to Archie’s health log'; t._undo = undo || null; t.querySelector('[data-lt-undo]').style.display = undo ? '' : 'none';
+  t.classList.remove('on'); void t.offsetWidth; t.classList.add('on'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('on'), undo ? 4500 : 3000);
+}
 function enterLogChat() {
-  clearTimeout(LOG_T); if (LOG_CHAT) return; LOG_CHAT = true;
-  LOG_SAVED = { groups: chat.groups, chips: CHIPS.slice(), ph: $input.placeholder, replies: Object.keys(LOG_REPLIES).map(k => [k, CHIP_REPLIES[k]]) };
-  chat.groups = [{ items: [{ type: 'ai', mid: 'mlog', text: LOG_GREETING, time: nowTime() }] }]; openMsgs.add('mlog');   // shown in full, not collapsed
-  CHIPS.splice(0, CHIPS.length, ...LOG_CHIPS); Object.assign(CHIP_REPLIES, LOG_REPLIES);
+  clearTimeout(LOG_T); if (LOG_CHAT) return; LOG_CHAT = true; LCARD_N = 6;
+  LOG_SAVED = { groups: chat.groups, ph: $input.placeholder };
+  chat.groups = [{ items: [{ type: 'ai', mid: 'mlog', text: LOG_GREETING, time: nowTime() }, { type: 'logopts' }] }]; openMsgs.add('mlog');   // shown in full, not collapsed
   $input.placeholder = 'Log medicine, food, weight…';
-  [$chatHome, $chatExpand].forEach(v => { v.innerHTML = ''; }); renderChat(); renderChips();
+  [$chatHome, $chatExpand].forEach(v => { v.innerHTML = ''; }); renderChat();
 }
 function exitLogChat() {
   if (!LOG_CHAT) return; LOG_CHAT = false;
-  openMsgs.delete('mlog'); chat.groups = LOG_SAVED.groups; CHIPS.splice(0, CHIPS.length, ...LOG_SAVED.chips); $input.placeholder = LOG_SAVED.ph;
-  LOG_SAVED.replies.forEach(([k, v]) => { if (v === undefined) delete CHIP_REPLIES[k]; else CHIP_REPLIES[k] = v; });
-  [$chatHome, $chatExpand].forEach(v => { v.innerHTML = ''; }); renderChat(); renderChips();
+  openMsgs.delete('mlog'); chat.groups = LOG_SAVED.groups; $input.placeholder = LOG_SAVED.ph;
+  [$chatHome, $chatExpand].forEach(v => { v.innerHTML = ''; }); renderChat();
 }
 function openLogChat() { enterLogChat(); openExpand(false); $chatExpand.scrollTop = 0; setTimeout(openKeyboard, 350); }
 function sendFromInput() {
@@ -2418,6 +2533,15 @@ $screen.addEventListener('click', e => {
   if (le) { e.stopPropagation(); setMsgOpen(le.dataset.less, false); return; }
   const tg = BUBBLE_STYLE !== 'd1' && e.target.closest('.bubble.ai.can-toggle');
   if (tg) { e.stopPropagation(); setMsgOpen(tg.dataset.bmid, !openMsgs.has(tg.dataset.bmid)); return; }
+  const lo = e.target.closest('[data-logopt]');
+  if (lo) { e.stopPropagation(); closeKeyboard(); LOG_KIND = LOG_KEYS[lo.dataset.logopt] || null; send(lo.dataset.logopt); return; }
+  if (e.target.closest('[data-lc-show]')) { e.stopPropagation(); closeKeyboard(); send('View all logs'); return; }
+  const lm = e.target.closest('[data-lc-more]');
+  if (lm) { e.stopPropagation(); LCARD_N = LCARD_N < neAllNotes().length ? LCARD_N + 6 : 6; lcRefresh(); return; }
+  const le2 = e.target.closest('[data-lc-edit]');
+  if (le2) { e.stopPropagation(); closeKeyboard(); neSheetOpen(le2.dataset.lcEdit, 'chat'); return; }
+  const ld = e.target.closest('[data-lc-del]');
+  if (ld) { e.stopPropagation(); const id = ld.dataset.lcDel, prev = VB_EDITS[id]; VB_EDITS[id] = { del: true }; lcRefresh(); neRefresh(); showLogTip('Log deleted', () => { if (prev) VB_EDITS[id] = prev; else delete VB_EDITS[id]; lcRefresh(); neRefresh(); }); return; }
   const ct = e.target.closest('[data-cta]');
   if (ct) { e.stopPropagation(); answerYes(ct.dataset.cta); return; }
   const op = e.target.closest('[data-opt]');
@@ -2966,11 +3090,12 @@ const BASE = {
   24: { act: { n: 290, avg: 305, pct: 12, up: false, sim: 350 }, eat: { n: 6, avg: 7, pct: 14, up: false }, drink: { n: 12, avg: 10, pct: 17, up: true },
         bark: { n: 35, avg: 40, pct: 15, up: true, sim: 22 },
         wk: 'Archie was <b>less active by 12%</b> than usual this week. He also <b>ate less often by 14%</b>, <b>drank more often by 17%</b>, and <b>barked 15% more than usual</b>.' },
-  21: { act: { n: 296, avg: 303, pct: 20, up: false, sim: 350 }, eat: { n: 9, avg: 7, pct: 30, up: true }, drink: { n: 13, avg: 10, pct: 17, up: true },
-        bark: { n: 25, avg: 40, pct: 10, up: true, sim: 22 },
+  21: { act: { n: 150, avg: 303, pct: 20, up: false, sim: 350 }, eat: { n: 9, avg: 7, pct: 30, up: true }, drink: { n: 13, avg: 10, pct: 17, up: true },
+        bark: { n: 45, avg: 40, pct: 10, up: true, sim: 20, ul: 'less' },   // Figma copy says "less than usual"
         wk: 'Archie <b>moved 20% less</b> and <b>ate 30% more</b> this week. Cooler weather or extra treats are common reasons.' },
 };
 const DIARY_BASE = 'Archie had a quiet day, balancing naps, meals, and time by the window. He checked out the kitchen, watched the world go by, and occasionally barked at outside noises. He spent most of the afternoon resting before eagerly greeting you at the door.';
+const DIARY_SAT = 'Archie had a mellow day at home. Between naps, meals, and water breaks, he explored the living room, played with his toys, and barked at a few sounds outside. He took it easy most of the afternoon and was excited to see you walk through the door.';
 const DIARY_THU = 'Archie had a relaxing day, balancing naps, meals, drinking, and playful moments. He explored the living room, played with his toys, and occasionally barked at outside noises. He spent most of the afternoon resting before eagerly greeting you at the door.';   // every Thursday
 function dayData(d) {
   const n = +d, r = ddRnd(n * 7919 + 13), pick = (lo, hi) => lo + Math.round(r() * (hi - lo));
@@ -2985,6 +3110,7 @@ function dayData(d) {
   [x.act, x.bark].forEach(o => { const m = Math.max(o.n, o.sim); o.fa = o.n / m; o.fs = o.sim / m; });   // bar lengths are proportional to the numbers (longest bar = full track)
   x.diary.poster = N2 + 'diary_' + (n === 21 ? 5 : ((n - 24) % 5 + 5) % 5 + 1) + '.jpg'; x.diary.vid = 'live';   // thumbnails rotate through the 5 stills (11/21 uses #5, the dog is large in frame); every day plays the same clip as 11/24
   if (new Date(2026, 10, n).getDay() === 4) x.diary = Object.assign({}, x.diary, { txt: DIARY_THU });
+  if (n === 21) x.diary = Object.assign({}, x.diary, { txt: DIARY_SAT });   // Figma 11/21 diary
   x.jit = n;
   return x;
 }
@@ -3015,7 +3141,7 @@ function wkRange(d) {
   const e = new Date(2026, 10, +d), s = new Date(2026, 10, +d - 6), f = dt => MONN[dt.getMonth()] + ' ' + dt.getDate();
   return s.getMonth() === e.getMonth() ? f(s) + '–' + e.getDate() : f(s) + '–' + f(e);
 }
-const WK_TIP = '<span class="n2-tip">💡<b>Tip:</b> A puzzle toy or snuffle mat can keep him busy and slow down snacking.</span>';
+const WK_TIP = '<span class="n2-tip">💡<b>Weekend Tip:</b> A puzzle toy or snuffle mat can keep him busy and slow down snacking.</span>';
 const isSat = d => new Date(2026, 10, +d).getDay() === 6;
 function n2Week(d) {
   const D = dayData(d), sat = isSat(d);
@@ -3030,10 +3156,10 @@ function n2Week(d) {
 }
 const BETA = ' <em class="n2-beta">BETA</em>';
 // ── Archie vs similar dogs (Activity + Barking) ──
-function n2Cmp(a, s, unitA, unitS, fa, fs) {
-  const row = (kind, lab, v, unit, f, info) => '<div class="n2-cr"><div class="n2-cl"><span class="' + (kind === 'g' ? 'b' : 'm') + '">' + lab + (info ? n2Info : '') + '</span><span class="v"><b>' + v + '</b> <u>' + unit + '</u></span></div>' +
-    '<div class="n2-tr gr"><i class="' + kind + '" style="width:' + (f * 100).toFixed(1) + '%"></i></div></div>';
-  return '<div class="n2-cg n2-cgs"><div class="n2-cg-r">' + row('g', 'Archie', a, unitA, fa) + row('s', 'Similar dogs', s, unitS, fs, true) + '</div></div>';
+function n2Cmp(a, s, unitA, unitS, fa, fs) {   // Figma comparison box (325 x 168, #DFB2FF outline, 12px radius)
+  const grp = (kind, lab, v, unit, f, info) => '<div class="cb-g"><div class="cb-row"><div class="cb-l"><span>' + lab + '</span>' + (info ? '<button class="n2-infob" aria-label="How it works"><img class="n2-info" src="' + N2 + 'fig_info.svg" alt=""></button>' : '') + '</div><div class="cb-v"><b>' + v + '</b><small>' + unit + '</small></div></div>' +
+    '<div class="n2-tr cb-tr"><i class="' + kind + '" style="width:' + (f * 100).toFixed(1) + '%"></i></div></div>';
+  return '<div class="n2-cg n2-cgs cb">' + grp('g', 'Archie', a, unitA, fa) + grp('s', 'Similar dogs', s, unitS, fs, true) + '<img class="cb-sp" src="' + N2 + 'fig_star2.svg" alt=""></div>';
 }
 const bd = t => '<b>' + t + '</b>';
 // ── Eating & Drinking ──
@@ -3056,7 +3182,7 @@ function n2Act(d) {
   return head + n2Gray('act', 'Activity', a, d);
 }
 function n2Bark(d) {
-  const D = dayData(d), b = D.bark, u = ddCmp(b.n, b.avg), s = b.n < b.sim ? 'less' : 'more';
+  const D = dayData(d), b = D.bark, u = b.ul || ddCmp(b.n, b.avg), s = b.n < b.sim ? 'less' : 'more';
   const head = PREMIUM
     ? '<p class="n2-p">Archie barked ' + bd(u + ' than usual') + ' today' + (u === s ? ' and ' : ', but still ') + bd(s + ' than similar dogs') + '.</p>' + n2Cmp(b.n, b.sim, 'times today', 'times/day avg.', b.fa, b.fs)
     : '<p class="n2-p">Archie was barking <b>' + b.n + ' times</b> today, ' + u + ' than usual.</p>';
@@ -3119,8 +3245,13 @@ const rngLabel = r => 'Nov ' + r.s + ' – Nov ' + r.e;
 const MON = 'Nov.';
 const dnum = (d, off) => { const dt = new Date(2026, 10, +d - off); return ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'][dt.getMonth()] + ' ' + pad2(dt.getDate()) + ', ' + dt.getFullYear(); };
 let HL_OPT = 'D';   // DRAFT: where the single "edit health log" control sits (A = title row icon, B = "Logged today" row icon, C = Edit pill)
-function n2Banner() {   // banner spot (replaces the Health Log card): drop an image in BANNER_IMG to fill it
-  return '<div class="n2-banner" role="button" tabindex="0" aria-label="Open Nanny Chat" data-open-nanny>' + (BANNER_IMG ? '<img src="' + BANNER_IMG + '" alt="">' : '<img class="b-orb" src="assets/n/nr_happy.png" alt=""><div class="b-tx"><b>Chat with Nanny</b><span>Log medicine, food, weight &amp; more</span></div><span class="b-go" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="#434343" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>') + '</div>';
+function n2Banner() {   // banner, exactly as the Figma: gradient, two multiply glows, masked Nanny avatar peeking in, 14px bold white text, 32px arrow
+  const A = 'assets/n2/';
+  return '<div class="n2-banner" role="button" tabindex="0" aria-label="Open Nanny Chat" data-open-nanny>' + (BANNER_IMG ? '<img src="' + BANNER_IMG + '" alt="">' :
+    '<div class="bn-v1"><div class="in"><div class="vec"><div class="vi"><img src="' + A + 'fig_b_v6.svg" alt=""></div></div></div></div>' +
+    '<div class="bn-v2"><div class="in"><div class="vec"><div class="vi"><img src="' + A + 'fig_b_v7.svg" alt=""></div></div></div></div>' +
+    '<div class="bn-av"><div class="l1"><div class="mk m1"><img src="' + A + 'fig_b_glass1.svg" alt=""></div></div><div class="l2"><div class="mk m2"><div class="ph"><img src="' + A + 'fig_b_avatar.png" alt=""></div></div></div></div>' +
+    '<div class="bn-tx"><span>Log pet’s health in Nanny Chat</span></div><div class="bn-go"><img src="' + A + 'fig_b_arrow.svg" alt=""></div>') + '</div>';
 }
 const BANNER_IMG = '';
 function n2Health() {
@@ -3388,12 +3519,14 @@ function vbTrends7(d) {   // same numbers as the report for that day (labels, we
     ['Barking', ar(b), b.pct, 'Barking ' + (b.up ? 'more' : 'less') + ' than usual, average ' + b.avg + ' times/day.' + (rel(b.n, b.sim) ? ' Barks ' + rel(b.n, b.sim) + '% ' + (b.n < b.sim ? 'less' : 'more') + ' than similar pets.' : '')],
   ];
 }
+function neAllNotes() {   // every health-log entry (demo history + what was logged in Nanny Chat), with edits / deletes applied, oldest first
+  return VB_POOL.map(([m, d, k, t], i) => ({ id: 'p' + i, dt: new Date(2026, m - 1, d), k, t })).concat(
+    Object.keys(HLOG).flatMap(dk => (HLOG[dk] || []).map(it => ({ id: 'h' + it.id, dt: new Date(2026, 10, +dk), k: it.k, t: it.t }))))
+    .map(x => { const ed = VB_EDITS[x.id]; return ed ? (ed.del ? null : Object.assign({}, x, ed)) : x; }).filter(Boolean).sort((a, b) => a.dt - b.dt);
+}
 function vbData() {
   const { s, e, n } = vbRange(), md = d => vbMD(d.getMonth() + 1, d.getDate()), day = 864e5;
-  const notes = VB_POOL.map(([m, d, k, t], i) => ({ id: 'p' + i, dt: new Date(2026, m - 1, d), k, t })).concat(
-    Object.keys(HLOG).flatMap(dk => (HLOG[dk] || []).map(it => ({ id: 'h' + it.id, dt: new Date(2026, 10, +dk), k: it.k, t: it.t }))))
-    .map(x => { const ed = VB_EDITS[x.id]; return ed ? (ed.del ? null : Object.assign({}, x, ed)) : x; }).filter(Boolean)   // edits made in the brief (date / text / tag)
-    .filter(x => x.dt >= s && x.dt <= e).sort((a, b) => a.dt - b.dt);
+  const notes = neAllNotes().filter(x => x.dt >= s && x.dt <= e);
   const pe = new Date(s - day), ps = new Date(+pe - (n - 1) * day), cmp = md(ps) + '-' + md(pe);
   const fam = n <= 10 ? 7 : n <= 21 ? 14 : 30;
   const trends = (n === 7 ? vbTrends7(+rpDay) : vbTrendsN(e.getDate() + e.getMonth() * 31, n)).map(([t, ar, pct, d]) => [t, ar, ar ? pct + '% vs. ' + cmp : 'Usual', d]);
@@ -3473,12 +3606,13 @@ function vbNotesHtml(D) {
   return '<div class="vb-notes"><div class="vb-lab">Pet notes</div><div class="vb-card vb-tl">' + (groups.length ? groups.map(g => '<div class="tg"><div class="dt">' + g.d + '</div><div class="ln"><i></i></div><div class="en">' + g.items.map(neRow).join('') + '</div></div>').join('') : '<div class="er"><span>No logs in this period.</span></div>') + '</div></div>';
 }
 function neRefresh() { const w = document.querySelector('#vb-body .vb-notes'); if (w) w.outerHTML = vbNotesHtml(vbData()); }
-function neSheetOpen(id) {
-  const D = vbData(), n = D.notes.find(x => x[3] === id); if (!n) return;
-  NE_SHEET = { id, d: n[0] };
+function neSheetOpen(id, src) {
+  const x = neAllNotes().find(y => y.id === id); if (!x) return;
+  const n = [vbMD(x.dt.getMonth() + 1, x.dt.getDate()), x.k, x.t, id];
+  NE_SHEET = { id, d: n[0], src: src || 'brief' };
   let sh = document.getElementById('ne-sheet');
   if (!sh) { document.getElementById('screen').insertAdjacentHTML('beforeend', '<div class="ne-sheet" id="ne-sheet" aria-hidden="true"><div class="sc" data-ne-close></div><div class="sh" role="dialog" aria-label="Edit note"></div></div>'); sh = document.getElementById('ne-sheet'); }
-  const v = neVal(n[2]), full = n[0] + '/' + D.e.getFullYear();
+  const v = neVal(n[2]), full = n[0] + '/' + x.dt.getFullYear();
   sh.querySelector('.sh').innerHTML = '<div class="sh-h"><h3>Edit note</h3><button class="sh-x" data-ne-close aria-label="Close"><img src="' + N2 + 'close.svg" alt=""></button></div>' +
     '<div class="ne-f"><label>Date</label><div class="ne-dp"><div class="ne-dtin"><img src="' + N2 + 'cal_blue.svg" alt=""><input data-ne-date inputmode="numeric" autocomplete="off" maxlength="10" placeholder="MM/DD/YYYY" value="' + full + '" aria-label="Date (MM/DD/YYYY)"></div><p class="ne-err" hidden>Enter a valid date (MM/DD/YYYY), not in the future.</p></div></div>' +
     '<div class="ne-f"><label>Note</label><div class="ne-ta"><textarea data-ne-text maxlength="200" aria-label="Note text">' + vbEsc(v) + '</textarea></div><div class="ne-cnt"><span>' + v.length + '/200</span></div></div>' +
@@ -3494,16 +3628,16 @@ document.addEventListener('click', e => {
   if (t.closest('[data-ne-close]')) { neSheetClose(); return; }
   const sv = t.closest('[data-ne-save]'), dl = t.closest('[data-ne-del]');
   if (sv || dl) {
-    const root = document.getElementById('ne-sheet'), id = NE_SHEET.id; let msg = 'Note deleted';
+    const root = document.getElementById('ne-sheet'), id = NE_SHEET.id, chatSrc = NE_SHEET.src === 'chat', prevEd = VB_EDITS[id]; let msg = chatSrc ? 'Log deleted' : 'Note deleted';
     if (dl) { VB_EDITS[id] = { del: true }; }
     else {
       const inp = root.querySelector('[data-ne-date]'), dt = neParse(inp.value);
       if (!dt) { root.querySelector('.ne-dp').classList.add('bad'); root.querySelector('.ne-err').hidden = false; inp.focus({ preventScroll: true }); return; }
-      const D0 = vbData(), n = D0.notes.find(x => x[3] === id), on = root.querySelector('.ne-tag.on'), k = on ? on.dataset.neTag : n[1];
+      const D0 = vbData(), cur = neAllNotes().find(y => y.id === id), n = [0, cur.k, cur.t, id], on = root.querySelector('.ne-tag.on'), k = on ? on.dataset.neTag : n[1];
       VB_EDITS[id] = { dt, k, t: neLabel(k) + ': ' + (root.querySelector('[data-ne-text]').value.trim() || neVal(n[2])) };
-      msg = dt >= D0.s && dt <= D0.e ? 'Note updated' : 'Note moved to ' + VB_MO[dt.getMonth()] + ' ' + dt.getDate() + ', ' + dt.getFullYear() + ' (outside this brief)';
+      msg = chatSrc ? 'Log updated' : dt >= D0.s && dt <= D0.e ? 'Note updated' : 'Note moved to ' + VB_MO[dt.getMonth()] + ' ' + dt.getDate() + ', ' + dt.getFullYear() + ' (outside this brief)';
     }
-    neSheetClose(); neRefresh(); hlToast(msg, true);
+    neSheetClose(); neRefresh(); lcRefresh(); if (chatSrc) showLogTip(msg, dl ? () => { if (prevEd) VB_EDITS[id] = prevEd; else delete VB_EDITS[id]; lcRefresh(); neRefresh(); } : undefined); else hlToast(msg, true);
   }
 });
 document.addEventListener('input', e => {
